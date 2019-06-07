@@ -14,6 +14,7 @@
 				//clearStorage();
 				var dados = eachFormComplex(form_center);
 				setDataFormComplex(form_center);
+				clearStorage()
 			}
 		}
 		
