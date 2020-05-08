@@ -19,12 +19,12 @@
 				
 				
 			}
-			
+			colocaValorFormulario("#frm");
 		}
 		
 		
 		$(form_center).submit(function(e){
-			localStorage.setItem('isRefresh', true);
+			//localStorage.setItem('isRefresh', true);
 			//var dados = eachForm(form_center);
 			//setData(dados);
 			// var dados = eachFormComplex(form_center);
@@ -146,6 +146,27 @@
 		// return arr;
 	// };
 	
+	//popula os valores do filtro nos respectivos campos do formulário
+	function colocaValorFormulario(formulario){
+		
+		var cacheFiltro = getStorage("filtro"); //obtêm os valor json dentro do localStorage
+		var resultadoFiltro = JSON.parse(cacheFiltro);//converte a string JSON em objeto
+		var chaveFiltro = Object.keys(resultadoFiltro);//obtêm todas as chaves do objeto JSON 
+		
+		$(`${formulario} :input`).each(function(index, val){
+			
+			var tipo = $(this).attr("type");
+			var id = $(this).attr("id");
+			
+			if(id == chaveFiltro[index]){//verifica se o id do formulário é igual ao do campo do filtro
+				console.log("aqui");
+				var nomeCampo = chaveFiltro[index]
+				$(`#${id}`).val(resultadoFiltro[nomeCampo]);
+			}
+			
+		});
+		
+	};
 	
 	function percorreCampoFormulario(formulario){
 		
