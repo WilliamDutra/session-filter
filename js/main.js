@@ -168,6 +168,9 @@
 					preencheRadioButton(nomeCampo, resultadoFiltro[nomeCampo]);
 				}
 				
+				if(tipo == "checkbox"){
+					preecheCheckBox(nomeCampo, resultadoFiltro[nomeCampo]);
+				}
 			}
 			
 			
@@ -176,6 +179,7 @@
 		
 	};
 	
+	//percorre todos os campos do fomulário
 	function percorreCampoFormulario(formulario){
 		
 		var filtro = {};
@@ -199,6 +203,11 @@
 				filtro[nome] = retornaValorRadioButton(radio);
 			}
 			
+			if(tipo == "checkbox"){
+				var checkbox = id;
+				filtro[nome] = retornaValorCheckBox(checkbox);
+			}
+			
 		});
 		
 		var filtroJSON = converteParaJSON(filtro);
@@ -207,19 +216,31 @@
 		
 	};
 	
+	//converte valores para um objeto JSON
 	function converteParaJSON(dado){
 		return JSON.stringify(dado);
 	};
 	
-	//retorno o valor do radio button: true = "checado", false = "não checado"
+	//retorno o valor do radio button: true = "checado", false = "não checado" do radio button 
 	function retornaValorRadioButton(radio){
 		var valor = $(`#${radio}`).is(":checked") ? true : false;
 		return valor;
 	};
 	
-	//preeche o valor "checado" ou não "checado"
+	//retorno o valor do radio button: true = "checado", false = "não checado" do checkbox
+	function retornaValorCheckBox(checkbox){
+		var valor = $(`#${checkbox}`).is(":checked") ? true : false;
+		return valor;
+	};
+	
+	//preeche o valor "checado" ou não "checado" do radio button
 	function preencheRadioButton(radio, valor){
 		$(`#${radio}`).attr("checked", valor);
+	};
+	
+	//preecnhe o valor "checado" ou não "checado" do checkbox
+	function preecheCheckBox(checkbox, valor){
+		$(`#${checkbox}`).attr("checked", valor);
 	};
 	
 }(jQuery));
