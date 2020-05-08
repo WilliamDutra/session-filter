@@ -159,10 +159,18 @@
 			var id = $(this).attr("id");
 			
 			if(id == chaveFiltro[index]){//verifica se o id do formulário é igual ao do campo do filtro
-				console.log("aqui");
-				var nomeCampo = chaveFiltro[index]
+				
+				var nomeCampo = chaveFiltro[index];
 				$(`#${id}`).val(resultadoFiltro[nomeCampo]);
+				
+				
+				if(tipo == "radio"){
+					preencheRadioButton(nomeCampo, resultadoFiltro[nomeCampo]);
+				}
+				
 			}
+			
+			
 			
 		});
 		
@@ -184,7 +192,12 @@
 			//exclui o input de submit
 			if(tipo != "submit"){
 				filtro[nome] = valor;
-			}		
+			}
+
+			if(tipo == "radio"){
+				var radio = id;
+				filtro[nome] = retornaValorRadioButton(radio);
+			}
 			
 		});
 		
@@ -196,6 +209,17 @@
 	
 	function converteParaJSON(dado){
 		return JSON.stringify(dado);
+	};
+	
+	//retorno o valor do radio button: true = "checado", false = "não checado"
+	function retornaValorRadioButton(radio){
+		var valor = $(`#${radio}`).is(":checked") ? true : false;
+		return valor;
+	};
+	
+	//preeche o valor "checado" ou não "checado"
+	function preencheRadioButton(radio, valor){
+		$(`#${radio}`).attr("checked", valor);
 	};
 	
 }(jQuery));
