@@ -12,10 +12,14 @@
 				//console.log(getData(dados));
 				//setDataForm(form_center);
 				//clearStorage();
-				var dados = eachFormComplex(form_center);
-				setDataFormComplex(form_center);
-				clearStorage()
+				// var dados = eachFormComplex(form_center);
+				// setDataFormComplex(form_center);
+				// clearStorage()
+				
+				
+				
 			}
+			
 		}
 		
 		
@@ -23,8 +27,12 @@
 			localStorage.setItem('isRefresh', true);
 			//var dados = eachForm(form_center);
 			//setData(dados);
-			var dados = eachFormComplex(form_center);
-			setData(dados);
+			// var dados = eachFormComplex(form_center);
+			// setData(dados);
+			
+			var retornoFiltro = percorreCampoFormulario("#frm");
+			setStorage("filtro", retornoFiltro);
+			
 		});
 	};
 	
@@ -108,35 +116,65 @@
 		});
 	};
 	
-	function eachFormComplex(forms){
-		var arr = {};
-		$(forms + " :input").each(function(){
-			var type = $(this).attr("type");
-			var keys = $(this).attr("id");
-			var values = $(this).val();
-			if(type != "submit"){
-				arr[keys] = values;
-			}
+	// function eachFormComplex(forms){
+		// var arr = {};
+		// $(forms + " :input").each(function(){
+			// var type = $(this).attr("type");
+			// var keys = $(this).attr("id");
+			// var values = $(this).val();
+			// if(type != "submit"){
+				// arr[keys] = values;
+			// }
 			
-			if(type == "checkbox"){
-				var val = $(this).prop("checked");
-				arr[keys] = val;
-			}
+			// if(type == "checkbox"){
+				// var val = $(this).prop("checked");
+				// arr[keys] = val;
+			// }
+			
+		// });
+		
+		// $(forms + " select").each(function(){
+			// var type = $(this).attr("type");
+			// var keys = $(this).attr("id");
+			// var values = $(this).val();
+			// if(type != "submit"){
+				// arr[keys] = values;
+			// }
+			
+		// });
+		
+		// return arr;
+	// };
+	
+	
+	function percorreCampoFormulario(formulario){
+		
+		var filtro = {};
+		
+		//percorre os campos do formulário
+		$(`${formulario} :input`).each(function(){
+			
+			var tipo = $(this).attr("type");
+			var nome = $(this).attr("name");
+			var valor = $(this).val();
+			var id = $(this).attr("id");
+			
+			
+			//exclui o input de submit
+			if(tipo != "submit"){
+				filtro[nome] = valor;
+			}		
 			
 		});
 		
-		$(forms + " select").each(function(){
-			var type = $(this).attr("type");
-			var keys = $(this).attr("id");
-			var values = $(this).val();
-			if(type != "submit"){
-				arr[keys] = values;
-			}
-			
-		});
+		var filtroJSON = converteParaJSON(filtro);
 		
-		return arr;
+		return filtroJSON;
+		
 	};
 	
+	function converteParaJSON(dado){
+		return JSON.stringify(dado);
+	};
 	
 }(jQuery));
