@@ -3,11 +3,14 @@
 	$.fn.SessionFilter = function(methods){
 		
 		var form_center = "#" + this[0].id;
-		var isRefresh = localStorage.getItem("isRefresh");
+		//var isRefresh = localStorage.getItem("isRefresh");
+		
+		var Configuracao = JSON.parse(getStorage("configuracao_filtro"));
+		var isRefresh = Configuracao.isRefresh;
 		
 		if(methods == undefined){
 			
-			if(isRefresh == "true"){
+			if(isRefresh){
 				//var dados = eachForm(form_center);
 				//console.log(getData(dados));
 				//setDataForm(form_center);
@@ -15,16 +18,23 @@
 				// var dados = eachFormComplex(form_center);
 				// setDataFormComplex(form_center);
 				// clearStorage()
-			
+				
+				//verifica se existe a chave filtro para poder colocar o valores no formulário
+				if(getStorage("filtro"))
+					colocaValorFormulario(`${form_center}`);
+				
+				//apaga os valores do filtro caso haja um refresh na página
+				clearKeyStorage("filtro");
 			}
 			
-			colocaValorFormulario(`${form_center}`);
+			
 			
 		}
 		
 		
 		$(form_center).submit(function(e){
 			
+			configuracaoPadraoPlugin();
 			var retornoFiltro = percorreCampoFormulario("#frm");
 			setStorage("filtro", retornoFiltro);
 			
@@ -62,7 +72,11 @@
 	
 	function clearStorage(){
 		localStorage.clear();
-	}
+	};
+	
+	function clearKeyStorage(key){
+		localStorage.removeItem(key);
+	};
 	
 	/*function getData(data){
 		var value = "";
@@ -241,5 +255,18 @@
 		return false;
 	};
 	
+	//coloca as configurações padrões no localStorage, para a execução do plugin
+	function configuracaoPadraoPlugin(configuracao){
+		
+		if(configuracao != undefined){
+			
+		}else{
+			
+			var defaultConfig = { "isRefresh": true };
+			setStorage("configuracao_filtro", converteParaJSON(defaultConfig));
+			
+		}
+		
+	};
 	
 }(jQuery));
