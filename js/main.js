@@ -171,12 +171,22 @@
 				if(tipo == "checkbox"){
 					preecheCheckBox(nomeCampo, resultadoFiltro[nomeCampo]);
 				}
+				
 			}
 			
 			
 			
 		});
 		
+		//apenas combobox
+		$(`${formulario} select`).each(function(index, val){
+			
+			var tipo = $(this).attr("type");
+			var id = $(this).attr("id");
+			
+			preencheSelect(id, resultadoFiltro[id]);
+			
+		});
 	};
 	
 	//percorre todos os campos do fomulário
@@ -208,6 +218,11 @@
 				filtro[nome] = retornaValorCheckBox(checkbox);
 			}
 			
+			if(tipo == "select"){
+				var select = id;
+				filtro[nome] = retornaValorSelect(select);
+			}
+			
 		});
 		
 		var filtroJSON = converteParaJSON(filtro);
@@ -233,14 +248,32 @@
 		return valor;
 	};
 	
-	//preeche o valor "checado" ou não "checado" do radio button
+	function retornaValorSelect(select){
+		return $(`#${select} option:selected`).val();
+	};
+	
+	//preenche o valor "checado" ou não "checado" do radio button
 	function preencheRadioButton(radio, valor){
 		$(`#${radio}`).attr("checked", valor);
 	};
 	
-	//preecnhe o valor "checado" ou não "checado" do checkbox
+	//preenche o valor "checado" ou não "checado" do checkbox
 	function preecheCheckBox(checkbox, valor){
 		$(`#${checkbox}`).attr("checked", valor);
 	};
+	
+	//preenche a opção selecionado no select
+	function preencheSelect(select, valor){
+		$(`#${select}`).val(valor).change();
+	};
+	
+	//verificar se existe un combo no determindado formulario
+	function isComboBox(formulario){
+		var isCombo = $(`${formulario} select`).length;
+		if(isCombo >= 1)
+			return true;
+		return false;
+	};
+	
 	
 }(jQuery));
