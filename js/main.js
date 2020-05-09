@@ -15,20 +15,15 @@
 				// var dados = eachFormComplex(form_center);
 				// setDataFormComplex(form_center);
 				// clearStorage()
-				
-				
-				
+			
 			}
-			colocaValorFormulario("#frm");
+			
+			colocaValorFormulario(`${form_center}`);
+			
 		}
 		
 		
 		$(form_center).submit(function(e){
-			//localStorage.setItem('isRefresh', true);
-			//var dados = eachForm(form_center);
-			//setData(dados);
-			// var dados = eachFormComplex(form_center);
-			// setData(dados);
 			
 			var retornoFiltro = percorreCampoFormulario("#frm");
 			setStorage("filtro", retornoFiltro);
@@ -116,35 +111,6 @@
 		});
 	};
 	
-	// function eachFormComplex(forms){
-		// var arr = {};
-		// $(forms + " :input").each(function(){
-			// var type = $(this).attr("type");
-			// var keys = $(this).attr("id");
-			// var values = $(this).val();
-			// if(type != "submit"){
-				// arr[keys] = values;
-			// }
-			
-			// if(type == "checkbox"){
-				// var val = $(this).prop("checked");
-				// arr[keys] = val;
-			// }
-			
-		// });
-		
-		// $(forms + " select").each(function(){
-			// var type = $(this).attr("type");
-			// var keys = $(this).attr("id");
-			// var values = $(this).val();
-			// if(type != "submit"){
-				// arr[keys] = values;
-			// }
-			
-		// });
-		
-		// return arr;
-	// };
 	
 	//popula os valores do filtro nos respectivos campos do formulário
 	function colocaValorFormulario(formulario){
