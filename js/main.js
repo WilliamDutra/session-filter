@@ -3,22 +3,14 @@
 	$.fn.SessionFilter = function(methods){
 		
 		var form_center = "#" + this[0].id;
-		//var isRefresh = localStorage.getItem("isRefresh");
-		
+				
 		var Configuracao = JSON.parse(getStorage("configuracao_filtro"));
 		var isRefresh = Configuracao.isRefresh;
 		
 		if(methods == undefined){
 			
 			if(isRefresh){
-				//var dados = eachForm(form_center);
-				//console.log(getData(dados));
-				//setDataForm(form_center);
-				//clearStorage();
-				// var dados = eachFormComplex(form_center);
-				// setDataFormComplex(form_center);
-				// clearStorage()
-				
+								
 				//verifica se existe a chave filtro para poder colocar o valores no formulário
 				if(getStorage("filtro"))
 					colocaValorFormulario(`${form_center}`);
@@ -31,12 +23,13 @@
 			
 		}
 		
-		
+		//no submit do formulario são gravado os dados 
 		$(form_center).submit(function(e){
 			
+			//seta o as configurações do plugin
 			configuracaoPadraoPlugin();
-			var retornoFiltro = percorreCampoFormulario("#frm");
-			setStorage("filtro", retornoFiltro);
+			var retornoFiltro = percorreCampoFormulario("#frm");//obtêm os valores do filtro
+			setStorage("filtro", retornoFiltro);//armazena as informações do filtro
 			
 		});
 	};
@@ -50,26 +43,6 @@
 		return v;
 	};
 	
-	function eachForm(forms){
-		var arr = {};
-		$(forms + " input[type='text']").each(function(){
-			
-			var keys = $(this).attr("id");
-			var values = $(this).val();
-			
-			arr[keys] = values;
-			
-		});
-		return arr;
-	};
-	
-	function setData(data){
-		$.each(data, function(index, value){
-			console.log(value);
-			setStorage(index, value);
-		});
-	};
-	
 	function clearStorage(){
 		localStorage.clear();
 	};
@@ -77,55 +50,7 @@
 	function clearKeyStorage(key){
 		localStorage.removeItem(key);
 	};
-	
-	/*function getData(data){
-		var value = "";
-		$.each(data, function(index, value){
-			 value = getStorage(index);
-		});
-		return value;
-	};*/
-	
-	function setDataForm(forms){
-		$(forms + " input[type='text']").each(function(){
-			var keys = $(this).attr("id");
-			var value = getStorage(keys);
-			$(this).val(value);
-		});
-	};
 		
-	function setDataFormComplex(forms){
-		$(forms + " input").each(function(){
-			var type = $(this).attr("type");
-			var keys = $(this).attr("id");
-			if(type != "submit"){
-				var value = getStorage(keys);
-				$(this).val(value);
-			}
-			
-			if(type == "checkbox"){
-				var v = getStorage(keys);
-				if(v == "true"){
-					$(this).prop("checked", true);
-				}else{
-					$(this).prop("checked", false);
-				}
-			}
-			
-		});
-		
-		$(forms + " select").each(function(){
-			var type = $(this).attr("type");
-			var keys = $(this).attr("id");
-			if(type != "submit"){
-				var value = getStorage(keys);
-				$(this).val(value);
-			}
-			
-		});
-	};
-	
-	
 	//popula os valores do filtro nos respectivos campos do formulário
 	function colocaValorFormulario(formulario){
 		
