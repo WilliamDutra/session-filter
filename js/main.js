@@ -24,11 +24,11 @@
 		}
 		
 		//no submit do formulario são gravado os dados 
-		$(form_center).submit(function(e){
+		$(`${form_center}`).submit(function(e){
 			
 			//seta o as configurações do plugin
 			configuracaoPadraoPlugin();
-			var retornoFiltro = percorreCampoFormulario("#frm");//obtêm os valores do filtro
+			var retornoFiltro = percorreCampoFormulario(`${form_center}`);//obtêm os valores do filtro
 			setStorage("filtro", retornoFiltro);//armazena as informações do filtro
 			
 		});
