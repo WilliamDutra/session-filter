@@ -3,7 +3,9 @@
 	$.fn.SessionFilter = function(methods){
 		
 		var form_center = "#" + this[0].id;
-				
+		
+		//seta o as configurações do plugin
+		configuracaoPadraoPlugin();
 		var Configuracao = JSON.parse(getStorage("configuracao_filtro"));
 		var isRefresh = Configuracao.isRefresh;
 		
@@ -21,13 +23,17 @@
 			
 			
 			
+		}else{
+			
+			console.log(methods);
+			
 		}
 		
 		//no submit do formulario são gravado os dados 
 		$(`${form_center}`).submit(function(e){
 			
-			//seta o as configurações do plugin
-			configuracaoPadraoPlugin();
+			
+			//configuracaoPadraoPlugin();
 			var retornoFiltro = percorreCampoFormulario(`${form_center}`);//obtêm os valores do filtro
 			setStorage("filtro", retornoFiltro);//armazena as informações do filtro
 			
